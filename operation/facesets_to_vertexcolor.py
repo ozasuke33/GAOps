@@ -26,7 +26,12 @@ class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
             if layer_facesets == None:
                 break
 
+            if len(bm.loops.layers.color) == 0:
+                bm.loops.layers.color.new("ID Map")
             layer_vertexcolor = bm.loops.layers.color[0]
+            for c in bm.loops.layers.color:
+                if c.name == "ID Map":
+                    layer_vertexcolor = c
 
             for face in bm.faces:
                 fs = face[layer_facesets]
