@@ -9,8 +9,6 @@ class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
     bl_options = {"REGISTER", "UNDO"}
 
     def execute(self, context):
-
-        facesets = {}
         obj_as_mesh = []
 
         for obj in context.selected_objects:
@@ -18,6 +16,7 @@ class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
                 obj_as_mesh.append(obj)
 
         for obj in obj_as_mesh:
+            facesets = {}
             bm = bmesh.new()
             bm.from_mesh(obj.data)
 
@@ -35,6 +34,7 @@ class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
             for face in bm.faces:
                 fs = face[layer_facesets]
                 vertexcolor = [0, 0, 0]
+                
                 if fs not in facesets:
                     vertexcolor = [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)]
                     while True:
