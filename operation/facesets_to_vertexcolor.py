@@ -17,7 +17,7 @@ class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
             if obj.type == "MESH":
                 obj_as_mesh.append(obj)
 
-        # bpy.ops.object.mode_set(mode="VERTEX_PAINT")
+        bpy.ops.object.mode_set(mode="VERTEX_PAINT")
 
         for obj in obj_as_mesh:
             facesets = {}
@@ -28,6 +28,11 @@ class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
             if layer_facesets == None:
                 break
 
+            if (
+                obj.data.attributes.active_color_index < 0
+                or len(bm.loops.layers.color) == 0
+            ):
+                bm.loops.layers.color.new()
             layer_vertexcolor = bm.loops.layers.color[
                 obj.data.attributes.active_color_index
             ]
