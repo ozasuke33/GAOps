@@ -16,13 +16,17 @@ from . import _refresh_
 _refresh_.reload_modules()
 
 from .operation.facesets_to_vertexcolor import *
-from .properties import *
+from .operation.launch_substance_painter import *
 from .preferences import *
+from .panel.pt_facesets_to_vertexcolor import *
+from .panel.pt_launch_substance_painter import *
 
 classess = [
     OBJECT_OT_facesets_to_vertexcolor,
-    GAOps_Properties,
+    OBJECT_OT_launch_substance_painter,
     UI_PT_GAOps_Preferences,
+    UI_PT_faceSets_to_vertexcolor,
+    UI_PT_launch_substance_painter,
 ]
 
 
@@ -30,16 +34,10 @@ def register():
     for cls in classess:
         bpy.utils.register_class(cls)
 
-    bpy.types.WindowManager.gaops_properties = bpy.props.PointerProperty(
-        type=GAOps_Properties
-    )
-
 
 def unregister():
     for cls in classess:
         bpy.utils.unregister_class(cls)
-
-    del bpy.types.WindowManager.gaops_properties
 
 
 if __name__ == "__main__":
