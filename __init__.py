@@ -3,7 +3,7 @@ bl_info = {
     "author": "ozasuke",
     "description": "Game Asset Operations",
     "blender": (4, 3, 0),
-    "version": (0, 0, 1),
+    "version": (1, 0, 0),
     "location": "3D Vieport > Sidebar",
     "warning": "",
     "category": "Object",
