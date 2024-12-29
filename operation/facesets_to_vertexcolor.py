@@ -17,9 +17,12 @@ class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
             if obj.type == "MESH":
                 obj_as_mesh.append(obj)
 
-        bpy.ops.object.mode_set(mode="VERTEX_PAINT")
+        active = context.view_layer.objects.active
 
         for obj in obj_as_mesh:
+            context.view_layer.objects.active = obj
+            bpy.ops.object.mode_set(mode="VERTEX_PAINT")
+
             facesets = {}
             bm = bmesh.new()
             bm.from_mesh(obj.data)
@@ -84,5 +87,7 @@ class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
 
             bm.to_mesh(obj.data)
             bm.free()
+
+        context.view_layer.objects.active = active
 
         return {"FINISHED"}
