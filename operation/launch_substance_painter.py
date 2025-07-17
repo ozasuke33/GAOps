@@ -12,15 +12,16 @@ class OBJECT_OT_launch_substance_painter(bpy.types.Operator):
     def poll(cls, context):
         if bpy.context.preferences.addons["GAOps"].preferences.exe_path == "":
             return False
-        if bpy.data.is_saved == False:
-            return False
+
         for obj in context.selected_objects:
             if obj.type == "MESH":
                 return True
         return False
 
     def execute(self, context):
-        filename = str(pathlib.Path(bpy.path.abspath("//")) / "gaops_exchange.fbx")
+        filename = str(
+            pathlib.Path(bpy.path.abspath(bpy.app.tempdir)) / "gaops_exchange.fbx"
+        )
 
         bpy.ops.export_scene.fbx(filepath=filename, use_selection=True)
 
