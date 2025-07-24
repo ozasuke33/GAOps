@@ -2,6 +2,7 @@ import bpy
 import bmesh
 
 import random
+import math
 
 
 class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
@@ -47,25 +48,25 @@ class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
 
                 if fs not in facesets:
                     vertexcolor = [
-                        random.randint(0, 255),
-                        random.randint(0, 255),
-                        random.randint(0, 255),
+                        random.random(),
+                        random.random(),
+                        random.random(),
                     ]
                     while True:
                         roll_dice = False
                         for _, color in facesets.items():
                             if (
-                                color[0] == vertexcolor[0]
-                                and color[1] == vertexcolor[1]
-                                and color[2] == vertexcolor[2]
+                                math.isclose(color[0], vertexcolor[0], rel_tol=0.1)
+                                and math.isclose(color[1], vertexcolor[1], rel_tol=0.1)
+                                and math.isclose(color[2], vertexcolor[2], rel_tol=0.1)
                             ):
                                 roll_dice = True
 
                         if roll_dice:
                             vertexcolor = [
-                                random.randint(0, 255),
-                                random.randint(0, 255),
-                                random.randint(0, 255),
+                                random.random(),
+                                random.random(),
+                                random.random(),
                             ]
                         else:
                             break
@@ -75,9 +76,9 @@ class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
                     vertexcolor = facesets[fs]
 
                 for loop in face.loops:
-                    loop[layer_vertexcolor][0] = vertexcolor[0] / 255.0
-                    loop[layer_vertexcolor][1] = vertexcolor[1] / 255.0
-                    loop[layer_vertexcolor][2] = vertexcolor[2] / 255.0
+                    loop[layer_vertexcolor][0] = vertexcolor[0]
+                    loop[layer_vertexcolor][1] = vertexcolor[1]
+                    loop[layer_vertexcolor][2] = vertexcolor[2]
 
             bm.to_mesh(obj.data)
             bm.free()
