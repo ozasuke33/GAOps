@@ -60,13 +60,7 @@ class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
                                 and color[2] == vertexcolor[2]
                             ):
                                 roll_dice = True
-                        for color in facesets_colors:
-                            if (
-                                color[0] == vertexcolor[0]
-                                and color[1] == vertexcolor[1]
-                                and color[2] == vertexcolor[2]
-                            ):
-                                roll_dice = True
+
                         if roll_dice:
                             vertexcolor = [
                                 random.randint(0, 255),
@@ -76,7 +70,7 @@ class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
                         else:
                             break
                     facesets[fs] = vertexcolor
-                    facesets_colors.append(vertexcolor)
+
                 if fs in facesets:
                     vertexcolor = facesets[fs]
 
