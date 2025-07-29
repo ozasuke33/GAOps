@@ -10,6 +10,13 @@ class OBJECT_OT_facesets_to_vertexcolor(bpy.types.Operator):
     bl_label = "Face Sets to Vertex Color"
     bl_options = {"REGISTER", "UNDO"}
 
+    @classmethod
+    def poll(cls, context):
+        for obj in context.selected_objects:
+            if obj.type == "MESH":
+                return True
+        return False
+
     def execute(self, context):
         obj_as_mesh = []
         facesets_colors = []
