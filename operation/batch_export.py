@@ -9,7 +9,12 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
     bl_label = "Batch Export"
     bl_options = {"REGISTER"}
 
-    path: bpy.props.StringProperty(name="Export Path", default=bpy.app.tempdir, subtype="DIR_PATH", options={'PATH_SUPPORTS_BLEND_RELATIVE'})
+    path: bpy.props.StringProperty(
+        name="Export Path",
+        default=bpy.app.tempdir,
+        subtype="DIR_PATH",
+        options={"PATH_SUPPORTS_BLEND_RELATIVE"},
+    )
 
     @classmethod
     def poll(cls, context):
@@ -27,7 +32,7 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
             obj.select_set(False)
             if obj.type == "MESH":
                 obj_as_mesh.append(obj)
-        
+
         for obj in obj_as_mesh:
             prev_loc = obj.location.copy()
 
@@ -42,11 +47,13 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
 
             filename = str(pathlib.Path(bpy.path.abspath(self.path)) / obj.name)
 
-            bpy.ops.export_scene.gltf(filepath=filename, use_selection=True)
+            bpy.ops.export_scene.gltf(
+                filepath=filename, use_selection=True, export_apply=True
+            )
 
             obj.location = prev_loc
-            
+
             obj.select_set(False)
 
-        self.report({'INFO'}, f"Batch exported to {bpy.path.abspath(self.path)}")
+        self.report({"INFO"}, f"Batch exported to {bpy.path.abspath(self.path)}")
         return {"FINISHED"}
