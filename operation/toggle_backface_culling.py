@@ -25,7 +25,7 @@ class OBJECT_OT_toggle_backface_culling(bpy.types.Operator):
 
         for obj in obj_as_mesh:
             for slot in obj.material_slots:
-                mat = slot.material
-                mat.use_backface_culling = self.use_backface_culling
+                if slot.material:
+                    slot.material.use_backface_culling = self.use_backface_culling
 
         return {"FINISHED"}
