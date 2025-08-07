@@ -62,7 +62,10 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
             filename = str(pathlib.Path(bpy.path.abspath(self.path)) / obj.name)
 
             bpy.ops.export_scene.gltf(
-                filepath=filename, use_selection=True, export_apply=True
+                filepath=filename,
+                use_selection=True,
+                export_apply=True,
+                export_format="GLTF_SEPARATE",
             )
 
             for c in obj.children_recursive:
