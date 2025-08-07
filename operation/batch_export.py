@@ -30,11 +30,19 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
 
         for obj in context.selected_objects:
             obj.select_set(False)
-            if obj.type == "MESH":
+            if obj.type == "MESH" or obj.type == "EMPTY":
                 obj_as_mesh.append(obj)
 
         for obj in obj_as_mesh:
-            if obj.parent and obj.parent in obj_as_mesh:
+
+            parent_in_selected_objects = False
+            parent = obj.parent
+            while parent:
+                if parent in obj_as_mesh:
+                    parent_in_selected_objects = True
+                parent = parent.parent
+
+            if parent_in_selected_objects:
                 continue
 
             prev_loc = obj.location.copy()
@@ -42,7 +50,7 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
             obj.location = (0, 0, 0)
 
             for c in obj.children_recursive:
-                if c in context.selectable_objects:
+                if c in obj_as_mesh:
                     c.select_set(True)
             obj.select_set(True)
 
@@ -58,7 +66,8 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
             )
 
             for c in obj.children_recursive:
-                c.select_set(False)
+                if c in obj_as_mesh:
+                    c.select_set(False)
             obj.select_set(False)
 
             obj.location = prev_loc
