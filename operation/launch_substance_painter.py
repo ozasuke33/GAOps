@@ -23,7 +23,9 @@ class OBJECT_OT_launch_substance_painter(bpy.types.Operator):
             pathlib.Path(bpy.path.abspath(bpy.app.tempdir)) / "gaops_exchange.fbx"
         )
 
-        bpy.ops.export_scene.fbx(filepath=filename, use_selection=True)
+        bpy.ops.export_scene.fbx(
+            filepath=filename, use_selection=True, use_mesh_modifiers=True
+        )
 
         subprocess.Popen(
             [
