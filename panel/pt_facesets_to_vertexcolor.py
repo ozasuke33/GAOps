@@ -11,4 +11,4 @@ class UI_PT_faceSets_to_vertexcolor(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
 
-        layout.operator("gaops.facesets_to_vertexcolor")
+        layout.operator("gaops.facesets_to_vertexcolor", icon="COLOR")
