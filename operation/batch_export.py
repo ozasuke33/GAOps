@@ -34,10 +34,16 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
                 obj_as_mesh.append(obj)
 
         for obj in obj_as_mesh:
+            if obj.parent and obj.parent in obj_as_mesh:
+                continue
+
             prev_loc = obj.location.copy()
 
             obj.location = (0, 0, 0)
 
+            for c in obj.children_recursive:
+                if c in context.selectable_objects:
+                    c.select_set(True)
             obj.select_set(True)
 
             if self.path == "":
@@ -51,9 +57,11 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
                 filepath=filename, use_selection=True, export_apply=True
             )
 
-            obj.location = prev_loc
-
+            for c in obj.children_recursive:
+                c.select_set(False)
             obj.select_set(False)
+
+            obj.location = prev_loc
 
         self.report({"INFO"}, f"Batch exported to {bpy.path.abspath(self.path)}")
         return {"FINISHED"}
