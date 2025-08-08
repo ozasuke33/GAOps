@@ -85,7 +85,7 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
             # bpy.ops.wm.obj_export(
             #    filepath=filename,
             #    export_selected_objects=True,
-            #    export_triangulated_mesh=False,
+            #    export_triangulated_mesh=True,
             #    export_pbr_extensions=True,
             #    path_mode="COPY",
             # )
