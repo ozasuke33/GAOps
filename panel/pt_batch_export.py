@@ -11,6 +11,13 @@ class UI_PT_batch_export(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
 
+        layout.prop(context.window_manager.GAOps_batch_export, "export_format")
         layout.prop(context.window_manager.GAOps_batch_export, "export_path")
         op = layout.operator("gaops.batch_export", icon="EXPORT")
+
+        if context.window_manager.GAOps_batch_export.export_format == "GLB":
+            op.is_glb = True
+        else:
+            op.is_glb = False
+
         op.path = context.window_manager.GAOps_batch_export.export_path

@@ -9,6 +9,8 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
     bl_label = "Batch Export"
     bl_options = {"REGISTER"}
 
+    is_glb: bpy.props.BoolProperty(name="Use GLB format", default=True)
+
     path: bpy.props.StringProperty(
         name="Export Path",
         default=bpy.app.tempdir,
@@ -59,22 +61,31 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
             if self.path.startswith("//") and not bpy.data.is_saved:
                 self.path = bpy.app.tempdir
 
-            filename = str(
-                pathlib.Path(bpy.path.abspath(self.path)) / (obj.name + ".glb")
-            )
+            if self.is_glb:
 
-            bpy.ops.export_scene.gltf(
-                filepath=filename,
-                use_selection=True,
-                export_apply=True,
-                export_format="GLB",
-            )
-            # bpy.ops.export_scene.gltf(
-            #    filepath=filename,
-            #    use_selection=True,
-            #    export_apply=True,
-            #    export_format="GLTF_SEPARATE",
-            # )
+                filename = str(
+                    pathlib.Path(bpy.path.abspath(self.path)) / (obj.name + ".glb")
+                )
+
+                bpy.ops.export_scene.gltf(
+                    filepath=filename,
+                    use_selection=True,
+                    export_apply=True,
+                    export_format="GLB",
+                )
+            else:
+
+                filename = str(
+                    pathlib.Path(bpy.path.abspath(self.path)) / (obj.name + ".gltf")
+                )
+
+                bpy.ops.export_scene.gltf(
+                    filepath=filename,
+                    use_selection=True,
+                    export_apply=True,
+                    export_format="GLTF_SEPARATE",
+                )
+
             # bpy.ops.export_scene.fbx(
             #    filepath=filename,
             #    use_selection=True,
