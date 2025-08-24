@@ -73,7 +73,6 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
                     export_apply=True,
                     export_format="GLB",
                     export_tangents=True,
-                    export_attributes=True,
                 )
             else:
 
@@ -87,7 +86,6 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
                     export_apply=True,
                     export_format="GLTF_SEPARATE",
                     export_tangents=True,
-                    export_attributes=True,
                 )
 
             # bpy.ops.export_scene.fbx(
