@@ -3,6 +3,7 @@ import bpy
 export_format_items = [
     ("GLB", "glTF Binary(.glb)", ""),
     ("GLTF_SEPARATE", "glTF Separate(.gltf + .bin + textures)", ""),
+    ("FBX", "FBX(.fbx + textures)", ""),
 ]
 
 

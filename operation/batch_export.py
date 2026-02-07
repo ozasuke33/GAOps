@@ -9,7 +9,8 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
     bl_label = "Batch Export"
     bl_options = {"REGISTER"}
 
-    is_glb: bpy.props.BoolProperty(name="Use GLB format", default=True)
+    is_glb: bpy.props.BoolProperty(name="Use GLB format", default=False)
+    is_fbx: bpy.props.BoolProperty(name="Use FBX format", default=False)
 
     path: bpy.props.StringProperty(
         name="Export Path",
@@ -61,7 +62,22 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
             if self.path.startswith("//") and not bpy.data.is_saved:
                 self.path = bpy.app.tempdir
 
-            if self.is_glb:
+            if self.is_fbx:
+
+                filename = str(
+                    pathlib.Path(bpy.path.abspath(self.path)) / (obj.name + ".fbx")
+                )
+
+                bpy.ops.export_scene.fbx(
+                    filepath=filename,
+                    use_selection=True,
+                    path_mode="COPY",
+                    use_mesh_modifiers=True,
+                    use_triangles=True,
+                    apply_scale_options="FBX_SCALE_ALL",
+                )
+
+            elif self.is_glb:
 
                 filename = str(
                     pathlib.Path(bpy.path.abspath(self.path)) / (obj.name + ".glb")
@@ -90,13 +106,6 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
                     export_extras=True,
                 )
 
-            # bpy.ops.export_scene.fbx(
-            #    filepath=filename,
-            #    use_selection=True,
-            #    path_mode="COPY",
-            #    use_mesh_modifiers=True,
-            #    use_triangles=True,
-            # )
             # bpy.ops.wm.obj_export(
             #    filepath=filename,
             #    export_selected_objects=True,

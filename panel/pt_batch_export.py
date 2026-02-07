@@ -19,5 +19,8 @@ class UI_PT_batch_export(bpy.types.Panel):
             op.is_glb = True
         else:
             op.is_glb = False
+        
+        if context.window_manager.GAOps_batch_export.export_format == "FBX":
+            op.is_fbx = True
 
         op.path = context.window_manager.GAOps_batch_export.export_path
