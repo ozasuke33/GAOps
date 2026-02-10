@@ -2,10 +2,12 @@ import bpy
 import bmesh
 
 
-class OBJECT_OT_toggle_backface_culling(bpy.types.Operator):
-    bl_idname = "gaops.toggle_backface_culling"
-    bl_label = "Toggle backface culling"
+class OBJECT_OT_set_backface_culling(bpy.types.Operator):
+    bl_idname = "gaops.set_backface_culling"
+    bl_label = "Set backface culling"
     bl_options = {"REGISTER", "UNDO"}
+
+    use_culling: bpy.props.BoolProperty(name="Set backface culling", default=True)
 
     @classmethod
     def poll(cls, context):
@@ -22,8 +24,5 @@ class OBJECT_OT_toggle_backface_culling(bpy.types.Operator):
         for obj in obj_as_mesh:
             for slot in obj.material_slots:
                 if slot.material:
-                    slot.material.use_backface_culling = (
-                        not slot.material.use_backface_culling
-                    )
-
+                    slot.material.use_backface_culling = self.use_culling
         return {"FINISHED"}
