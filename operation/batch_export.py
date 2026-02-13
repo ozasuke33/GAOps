@@ -3,14 +3,21 @@ import bmesh
 
 import pathlib
 
+export_format_items = [
+    ("GLB", "glTF Binary(.glb)", ""),
+    ("GLTF_SEPARATE", "glTF Separate(.gltf + .bin + textures)", ""),
+    ("FBX", "FBX(.fbx + textures)", ""),
+]
+
 
 class OBJECT_OT_batch_export(bpy.types.Operator):
     bl_idname = "gaops.batch_export"
     bl_label = "Batch Export"
     bl_options = {"REGISTER"}
 
-    is_glb: bpy.props.BoolProperty(name="Use GLB format", default=False)
-    is_fbx: bpy.props.BoolProperty(name="Use FBX format", default=False)
+    export_format: bpy.props.EnumProperty(
+        items=export_format_items, default="GLB", name="Export Format"
+    )
 
     path: bpy.props.StringProperty(
         name="Export Path",
@@ -62,7 +69,7 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
             if self.path.startswith("//") and not bpy.data.is_saved:
                 self.path = bpy.app.tempdir
 
-            if self.is_fbx:
+            if self.export_format == "FBX":
 
                 filename = str(
                     pathlib.Path(bpy.path.abspath(self.path)) / (obj.name + ".fbx")
@@ -77,7 +84,7 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
                     apply_scale_options="FBX_SCALE_ALL",
                 )
 
-            elif self.is_glb:
+            elif self.export_format == "GLB":
 
                 filename = str(
                     pathlib.Path(bpy.path.abspath(self.path)) / (obj.name + ".glb")
