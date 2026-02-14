@@ -81,6 +81,7 @@ class OBJECT_OT_batch_export(bpy.types.Operator):
                     path_mode="COPY",
                     use_mesh_modifiers=True,
                     use_triangles=True,
+                    use_custom_props=True,
                     apply_scale_options="FBX_SCALE_ALL",
                 )
 
