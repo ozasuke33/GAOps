@@ -56,7 +56,7 @@ class OBJECT_OT_create_stylized_bush(bpy.types.Operator):
 
         bpy.ops.object.duplicate_move()
 
-        bpy.ops.object.apply_all_modifiers()
+        bpy.ops.object.convert(target="MESH")
 
         bpy.ops.object.mode_set(mode="EDIT")
 
