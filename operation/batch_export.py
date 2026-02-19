@@ -13,6 +13,7 @@ export_format_items = [
 class OBJECT_OT_batch_export(bpy.types.Operator):
     bl_idname = "gaops.batch_export"
     bl_label = "Batch Export"
+    bl_description = "Batch Export as multiple .glb/.gltf/.fbx files (I tested only the static model)"
     bl_options = {"REGISTER"}
 
     export_format: bpy.props.EnumProperty(

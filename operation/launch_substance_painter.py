@@ -6,6 +6,7 @@ import pathlib
 class OBJECT_OT_launch_substance_painter(bpy.types.Operator):
     bl_idname = "gaops.launch_substance_painter"
     bl_label = "Launch Substance Painter with selected meshes"
+    bl_description = "Launch Substance Painter with selected meshes (You need to set the path of Substance Painter EXE in preferences)"
     bl_options = {"REGISTER"}
 
     @classmethod

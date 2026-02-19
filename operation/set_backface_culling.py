@@ -5,6 +5,7 @@ import bmesh
 class OBJECT_OT_set_backface_culling(bpy.types.Operator):
     bl_idname = "gaops.set_backface_culling"
     bl_label = "Set backface culling"
+    bl_description = "Set backface culling for EEVEE's material"
     bl_options = {"REGISTER", "UNDO"}
 
     use_culling: bpy.props.BoolProperty(name="Set backface culling", default=True)

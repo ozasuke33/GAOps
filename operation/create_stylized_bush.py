@@ -5,6 +5,7 @@ import bmesh
 class OBJECT_OT_create_stylized_bush(bpy.types.Operator):
     bl_idname = "gaops.create_stylized_bush"
     bl_label = "Create Stylized Bush"
+    bl_description = "Create Stylized Bush"
     bl_options = {"REGISTER", "UNDO"}
 
     voxel_size: bpy.props.FloatProperty(
